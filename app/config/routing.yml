@@ -1,0 +1,4 @@
+ping:
+    path:     /ping
+    defaults: { _controller: ApiBundle:GrimeDetector:ping, _format: json }
+    methods: [GET]

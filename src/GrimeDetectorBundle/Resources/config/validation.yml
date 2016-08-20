@@ -1,0 +1,17 @@
+GrimeDetectorBundle\Entity\Expression:
+    properties:
+        value:
+            - NotBlank: ~
+            - Length:
+                max:   255
+        censuredValue:
+            - NotBlank: ~
+            - Length:
+                max:   255
+
+GrimeDetectorBundle\Entity\Type:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max:   64

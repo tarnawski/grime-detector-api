@@ -1,0 +1,6 @@
+GrimeDetectorBundle\Entity\Expression:
+  expression1:
+    value: fuck
+    censuredValue: f***
+    language: pl
+    types: ['@type1']

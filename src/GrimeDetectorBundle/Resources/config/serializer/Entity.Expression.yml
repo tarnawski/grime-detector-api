@@ -1,0 +1,15 @@
+GrimeDetectorBundle\Entity\Expression:
+  exclusion_policy: ALL
+  properties:
+    id:
+      expose: true
+      groups: [EXPRESSION_DETAILS]
+    value:
+      expose: true
+      groups: [EXPRESSION_DETAILS]
+    censuredValue:
+      expose: true
+      groups: [EXPRESSION_DETAILS]
+    language:
+      expose: true
+      groups: [EXPRESSION_DETAILS]

@@ -3,6 +3,6 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     catcher
+    database_name:     grime-detector
     database_user:     root
-    database_password: ~
+    database_password: root
