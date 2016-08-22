@@ -5,6 +5,12 @@ services:
     arguments:
       - GrimeDetectorBundle\Entity\Word
 
+  grime_detector.checked_data.repository:
+    class: Doctrine\ORM\EntityRepository
+    factory: ['@doctrine.orm.entity_manager', getRepository]
+    arguments:
+      - GrimeDetectorBundle\Entity\CheckedData
+
   grime_detector.detector.static_strategy:
     class: GrimeDetectorBundle\Detector\Strategy\StaticStrategy
     arguments:
@@ -24,3 +30,4 @@ services:
     class: GrimeDetectorBundle\Service\StatusService
     arguments:
       - '@grime_detector.word.repository'
+      - '@grime_detector.checked_data.repository'

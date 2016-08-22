@@ -21,7 +21,7 @@ class WordRepository extends EntityRepository
         return $results;
     }
 
-    public function getLanguageCount()
+    public function getLanguagesCount()
     {
         $results = $this->createQueryBuilder('w')
             ->select('count(w.language)')
