@@ -20,4 +20,15 @@ class WordRepository extends EntityRepository
 
         return $results;
     }
+
+    public function getLanguageCount()
+    {
+        $results = $this->createQueryBuilder('w')
+            ->select('count(w.language)')
+            ->distinct()
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $results;
+    }
 }

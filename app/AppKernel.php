@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Hautelook\AliceBundle\HautelookAliceBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
 
             new GrimeDetectorBundle\GrimeDetectorBundle(),
             new ApiBundle\ApiBundle(),

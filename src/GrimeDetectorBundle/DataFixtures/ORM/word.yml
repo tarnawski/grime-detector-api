@@ -3,3 +3,7 @@ GrimeDetectorBundle\Entity\Word:
     value: dupa
     language: pl
     type: GRIME
+  word2:
+    value: fuck
+    language: en
+    type: GRIME

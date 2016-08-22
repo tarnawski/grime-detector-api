@@ -6,6 +6,7 @@ use ApiBundle\Form\Type\QueryType;
 use ApiBundle\Model\Query;
 use GrimeDetectorBundle\Corrector\GrimeCorrector;
 use GrimeDetectorBundle\Detector\StrategyFactory;
+use GrimeDetectorBundle\Service\StatusService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,23 @@ class GrimeDetectorController extends BaseController
     public function pingAction()
     {
         return JsonResponse::create(['pong'], Response::HTTP_OK);
+    }
+
+    /**
+     * @return Response
+     */
+    public function statusAction()
+    {
+        /** @var StatusService $statusService */
+        $statusService = $this->get('grime_detector.service.status_service');
+
+        $data = [
+            'languages' => $statusService->getLanguagesCount(),
+            'checked' => $statusService->getCheckedTextCount(),
+            'grime' => $statusService->getGrimeFoundCount()
+        ];
+
+        return JsonResponse::create($data, Response::HTTP_OK);
     }
 
     /**

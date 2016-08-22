@@ -19,3 +19,8 @@ services:
     class: GrimeDetectorBundle\Corrector\GrimeCorrector
     arguments:
       - '@grime_detector.word.repository'
+
+  grime_detector.service.status_service:
+    class: GrimeDetectorBundle\Service\StatusService
+    arguments:
+      - '@grime_detector.word.repository'
