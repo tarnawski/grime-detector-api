@@ -1,17 +1,14 @@
-GrimeDetectorBundle\Entity\Expression:
+GrimeDetectorBundle\Entity\Word:
     properties:
         value:
             - NotBlank: ~
             - Length:
                 max:   255
-        censuredValue:
+        language:
             - NotBlank: ~
             - Length:
-                max:   255
-
-GrimeDetectorBundle\Entity\Type:
-    properties:
-        name:
+                max:   32
+        type:
             - NotBlank: ~
             - Length:
-                max:   64
+                max:   32

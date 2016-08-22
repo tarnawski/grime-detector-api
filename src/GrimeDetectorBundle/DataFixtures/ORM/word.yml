@@ -1,0 +1,5 @@
+GrimeDetectorBundle\Entity\Word:
+  word1:
+    value: dupa
+    language: pl
+    type: GRIME

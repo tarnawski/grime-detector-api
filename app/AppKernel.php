@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Hautelook\AliceBundle\HautelookAliceBundle(),
+            new \Symfony\Bundle\MonologBundle\MonologBundle(),
 
             new GrimeDetectorBundle\GrimeDetectorBundle(),
             new ApiBundle\ApiBundle(),
@@ -64,6 +65,6 @@ class AppKernel extends Kernel
 
     protected function getAppName()
     {
-        return "catcher";
+        return "grime-detector";
     }
 }

@@ -1,0 +1,12 @@
+ApiBundle\Model\Query:
+    properties:
+        text:
+            - NotBlank: ~
+            - Length:
+                max:   255
+        language:
+            - Length:
+                max:   36
+        correct:
+            - Type:
+                type: bool

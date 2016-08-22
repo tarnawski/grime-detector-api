@@ -2,3 +2,8 @@ ping:
     path:     /ping
     defaults: { _controller: ApiBundle:GrimeDetector:ping, _format: json }
     methods: [GET]
+
+check:
+    path:     /check
+    defaults: { _controller: ApiBundle:GrimeDetector:check, _format: json }
+    methods: [POST]

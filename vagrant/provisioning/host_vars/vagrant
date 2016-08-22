@@ -1,5 +1,5 @@
 ---
-project_name: catcher
+project_name: grime-detector
 project_root: "/var/www/{{ project_name }}"
 project_web_root: "{{ project_root }}/web"
 project_databases:

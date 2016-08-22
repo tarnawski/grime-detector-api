@@ -1,7 +1,13 @@
 <?php
+
 namespace ApiBundle\Controller;
 
+use ApiBundle\Form\Type\QueryType;
+use ApiBundle\Model\Query;
+use GrimeDetectorBundle\Corrector\GrimeCorrector;
+use GrimeDetectorBundle\Detector\StrategyFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GrimeDetectorController extends BaseController
@@ -12,5 +18,50 @@ class GrimeDetectorController extends BaseController
     public function pingAction()
     {
         return JsonResponse::create(['pong'], Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function checkAction(Request $request)
+    {
+        $form = $this->createForm(QueryType::class);
+        $submittedData = json_decode($request->getContent(), true);
+        $form->submit($submittedData);
+
+        if (!$form->isValid()) {
+            return $this->error($this->getFormErrorsAsArray($form));
+        }
+
+        /** @var Query $query */
+        $query = $form->getData();
+
+        /** @var StrategyFactory $strategyFactory */
+        $strategyFactory = $this->get('grime_detector.detector.strategy_factory');
+        $strategy = $strategyFactory->getStrategy('static');
+
+        $result = $strategy->check($query->text, $query->language);
+
+        if ($result) {
+            return JsonResponse::create([
+                'STATUS' => 'OK'
+            ], Response::HTTP_OK);
+        }
+
+        if ($query->correct) {
+            /** @var GrimeCorrector $grimeCorrector */
+            $grimeCorrector = $this->get('grime_detector.corrector.grime_corrector');
+            $correctText = $grimeCorrector->correct($query->text, $query->language);
+
+            return JsonResponse::create([
+                'STATUS' => 'GRIME',
+                'CORRECT' => $correctText
+            ], Response::HTTP_OK);
+        }
+
+        return JsonResponse::create([
+            'STATUS' => 'GRIME'
+        ], Response::HTTP_OK);
     }
 }

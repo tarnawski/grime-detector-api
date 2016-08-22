@@ -1,5 +1,5 @@
 {
-  "name": "tarnawski/catcher",
+  "name": "tarnawski/grime-detector",
   "authors": [
     {
       "name": "Tomasz Tarnawski",
@@ -15,7 +15,8 @@
     "incenteev/composer-parameter-handler": "~2.1",
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
-    "jms/serializer-bundle": "1.1.*"
+    "jms/serializer-bundle": "1.1.*",
+    "symfony/monolog-bundle": "~2.4"
   },
   "require-dev": {
     "behat/behat": "~3.0",

@@ -1,9 +1,0 @@
-GrimeDetectorBundle\Entity\Type:
-  exclusion_policy: ALL
-  properties:
-    id:
-      expose: true
-      groups: [TYPE_DETAILS]
-    name:
-      expose: true
-      groups: [TYPE_DETAILS]

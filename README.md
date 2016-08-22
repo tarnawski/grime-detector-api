@@ -1,11 +1,6 @@
-Symfony Microkernel Skeleton
+GRIME DETECTOR
 ============================
-Symfony Microkernel Skeleton with tools that can be useful when developing microservices.
-Provisioning include:
-- apache2
-- php7
-- MySQL 5.7
-- composer
+Tool to detect vulgar language based on artificial intelligence
 
 ###Getting started
 
@@ -25,7 +20,7 @@ ansible-playbook -i hosts provision.yml -u {USERNAME} -k -K
 
 ### Create archive with project 
 ```
-composer archive --format=tar --file=catcher --dir=vagrant/provisioning/
+composer archive --format=tar --file=grime-detector --dir=vagrant/provisioning/
 ```
 ### Deploy App
 ```

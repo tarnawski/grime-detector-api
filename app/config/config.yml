@@ -26,3 +26,15 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+
+monolog:
+    use_microseconds: false
+    handlers:
+        applog:
+            type: fingers_crossed
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: error
+            handler: file
+        file:
+            type: stream
+            level: error
