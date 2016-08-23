@@ -10,18 +10,14 @@ use GrimeDetectorBundle\Service\StatusService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class GrimeDetectorController extends BaseController
 {
     /**
-     * @return Response
-     */
-    public function pingAction()
-    {
-        return JsonResponse::create(['pong'], Response::HTTP_OK);
-    }
-
-    /**
+     * @ApiDoc(
+     *  description="Returns API status"
+     * )
      * @return Response
      */
     public function statusAction()
@@ -39,6 +35,29 @@ class GrimeDetectorController extends BaseController
     }
 
     /**
+     * @ApiDoc(
+     *  description="Returns the result of the text analysis",
+     *  requirements={
+     *      {
+     *          "name"="text",
+     *          "dataType"="String",
+     *          "requirement"="true",
+     *          "description"="Text to check"
+     *      },
+     *      {
+     *          "name"="language",
+     *          "dataType"="String",
+     *          "requirement"="false",
+     *          "description"="Specify language to use, default check in all languages"
+     *      },
+     *      {
+     *          "name"="correct",
+     *          "dataType"="Boolean",
+     *          "requirement"="false",
+     *          "description"="If true, replace grime words"
+     *      }
+     *  }
+     * )
      * @param Request $request
      * @return mixed
      */
