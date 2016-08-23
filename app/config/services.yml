@@ -11,10 +11,16 @@ services:
     arguments:
       - GrimeDetectorBundle\Entity\CheckedData
 
+  grime_detector.service.logger_service:
+    class: GrimeDetectorBundle\Service\LoggerService
+    arguments:
+      - '@doctrine.orm.entity_manager'
+
   grime_detector.detector.static_strategy:
     class: GrimeDetectorBundle\Detector\Strategy\StaticStrategy
     arguments:
       - '@grime_detector.word.repository'
+      - '@grime_detector.service.logger_service'
 
   grime_detector.detector.strategy_factory:
     class: GrimeDetectorBundle\Detector\StrategyFactory
@@ -31,3 +37,4 @@ services:
     arguments:
       - '@grime_detector.word.repository'
       - '@grime_detector.checked_data.repository'
+

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4a7da1d98860aba76d37aacb1618fa7c",
-    "content-hash": "44f0bac0402c17db61dc0127d992915f",
+    "hash": "c82341ed3f154669a7c3478ccaf8bdce",
+    "content-hash": "14499af32703c853c34111a3ddcccd51",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -860,6 +860,60 @@
                 "rest"
             ],
             "time": "2015-12-29 16:02:50"
+        },
+        {
+            "name": "icecave/lace",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/IcecaveStudios/lace.git",
+                "reference": "959cc62db5805ab147e571b1e84f802bb75e2b9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/IcecaveStudios/lace/zipball/959cc62db5805ab147e571b1e84f802bb75e2b9f",
+                "reference": "959cc62db5805ab147e571b1e84f802bb75e2b9f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "icecave/archer": "~1"
+            },
+            "suggest": {
+                "eloquent/asplode": "Drop-in exception-based error handling."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Icecave\\Lace\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Harris",
+                    "email": "james.harris@icecave.com.au",
+                    "homepage": "https://github.com/jmalloc"
+                }
+            ],
+            "description": "A DSN parser for Doctrine databases and cache drivers.",
+            "homepage": "https://github.com/IcecaveStudios/lace",
+            "keywords": [
+                "doctrine",
+                "dsn",
+                "heroku",
+                "mysql",
+                "parser",
+                "postgres",
+                "redis",
+                "sqlite"
+            ],
+            "time": "2014-08-26 09:24:55"
         },
         {
             "name": "incenteev/composer-parameter-handler",

@@ -24,11 +24,6 @@ GrimeDetectorBundle\Entity\CheckedData:
             type: boolean
             options:
                 default: 0
-        spam:
-            column: spam
-            type: boolean
-            options:
-                default: 0
         date:
             column: date
             type: datetime

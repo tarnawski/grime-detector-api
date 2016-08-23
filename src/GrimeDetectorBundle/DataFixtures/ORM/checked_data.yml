@@ -2,15 +2,12 @@ GrimeDetectorBundle\Entity\CheckedData:
   data1:
     text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
     grime: true
-    spam: false
     date: <dateTime()>
   data2:
     text: Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
     grime: false
-    spam: false
     date: <dateTime()>
   data3:
     text: Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
     grime: true
-    spam: false
     date: <dateTime()>

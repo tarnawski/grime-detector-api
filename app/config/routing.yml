@@ -1,11 +1,6 @@
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /
-
-ping:
-    path:     /ping
-    defaults: { _controller: ApiBundle:GrimeDetector:ping, _format: json }
-    methods: [GET]
+    prefix:   /doc
 
 status:
     path:     /status

@@ -17,13 +17,11 @@ class LoggerService
 
     public function logData(
         $text,
-        $grime = false,
-        $spam = false
+        $grime = false
     ) {
         $data = new CheckedData();
         $data->setText($text);
         $data->setGrime($grime);
-        $data->setSpam($spam);
         $this->em->persist($data);
         $this->em->flush();
     }

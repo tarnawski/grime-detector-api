@@ -13,9 +13,6 @@ class CheckedData
     /** @var bool */
     private $grime;
 
-    /** @var bool */
-    private $spam;
-
     /** @var \DateTime */
     private $date;
 
@@ -62,22 +59,6 @@ class CheckedData
     public function setGrime($grime)
     {
         $this->grime = $grime;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isSpam()
-    {
-        return $this->spam;
-    }
-
-    /**
-     * @param boolean $spam
-     */
-    public function setSpam($spam)
-    {
-        $this->spam = $spam;
     }
 
     /**
