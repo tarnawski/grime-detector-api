@@ -4,3 +4,4 @@
 !/bin/console
 /vagrant/.vagrant
 /var
+vagrant/provisioning/grime-detector.tar

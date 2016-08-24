@@ -1,0 +1,22 @@
+GrimeDetectorBundle\Entity\Statistic:
+    type: entity
+    table: statistic
+    repositoryClass: GrimeDetectorBundle\Repository\StatisticRepository
+    id:
+        key:
+            column: key
+            type: string
+            nullable: false
+    fields:
+        name:
+            column: name
+            type: string
+            nullable: false
+            length: 64
+        value:
+            column: value
+            type: string
+            nullable: false
+            length: 64
+
+    lifecycleCallbacks: {  }

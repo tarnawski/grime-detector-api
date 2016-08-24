@@ -5,14 +5,8 @@ services:
     arguments:
       - GrimeDetectorBundle\Entity\Word
 
-  grime_detector.checked_data.repository:
-    class: Doctrine\ORM\EntityRepository
-    factory: ['@doctrine.orm.entity_manager', getRepository]
-    arguments:
-      - GrimeDetectorBundle\Entity\CheckedData
-
-  grime_detector.service.logger_service:
-    class: GrimeDetectorBundle\Service\LoggerService
+  grime_detector.service.statistic_service:
+    class: GrimeDetectorBundle\Service\StatisticService
     arguments:
       - '@doctrine.orm.entity_manager'
 
@@ -20,7 +14,7 @@ services:
     class: GrimeDetectorBundle\Detector\Strategy\StaticStrategy
     arguments:
       - '@grime_detector.word.repository'
-      - '@grime_detector.service.logger_service'
+      - '@grime_detector.service.statistic_service'
 
   grime_detector.detector.strategy_factory:
     class: GrimeDetectorBundle\Detector\StrategyFactory
@@ -32,9 +26,4 @@ services:
     arguments:
       - '@grime_detector.word.repository'
 
-  grime_detector.service.status_service:
-    class: GrimeDetectorBundle\Service\StatusService
-    arguments:
-      - '@grime_detector.word.repository'
-      - '@grime_detector.checked_data.repository'
 
