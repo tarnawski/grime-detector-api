@@ -16,6 +16,14 @@ class GrimeDetectorController extends BaseController
     /**
      * @return Response
      */
+    public function pingAction()
+    {
+        return JsonResponse::create(['pong'], Response::HTTP_OK);
+    }
+
+    /**
+     * @return Response
+     */
     public function statusAction()
     {
         /** @var StatisticService $statisticService */
