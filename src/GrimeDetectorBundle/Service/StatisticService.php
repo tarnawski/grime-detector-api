@@ -4,25 +4,18 @@ namespace GrimeDetectorBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use GrimeDetectorBundle\Repository\StatisticRepository;
-use GrimeDetectorBundle\Repository\WordRepository;
 use GrimeDetectorBundle\Entity\Statistic;
 
 class StatisticService
 {
-    /** @var WordRepository */
-    private $wordRepository;
-
     /** @var  EntityManager */
     private $em;
 
     /** @var  StatisticRepository */
     private $statisticRepository;
 
-    public function __construct(
-        WordRepository $wordRepository,
-        EntityManager $entityManager
-    ) {
-        $this->wordRepository = $wordRepository;
+    public function __construct( EntityManager $entityManager )
+    {
         $this->em = $entityManager;
         $this->statisticRepository = $entityManager->getRepository(Statistic::class);
     }
@@ -32,7 +25,7 @@ class StatisticService
         /** @var Statistic $statistic */
         $statistic = $this->statisticRepository->findByKey($key);
 
-        return $statistic->getValue();
+        return $statistic ? $statistic->getValue() : null;
     }
 
     public function incrementStatistic($key, $value = 1)

@@ -16,7 +16,7 @@ class StatisticRepository extends EntityRepository
             ->where('s.key = :key')
             ->setParameter('key', $key)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
 
         return $result;
     }

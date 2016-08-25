@@ -27,8 +27,6 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
-nelmio_api_doc: ~
-
 nelmio_cors:
     paths:
         '^/':

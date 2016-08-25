@@ -1,7 +1,3 @@
-NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /doc
-
 status:
     path:     /status
     defaults: { _controller: ApiBundle:GrimeDetector:status, _format: json }

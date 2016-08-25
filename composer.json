@@ -18,7 +18,6 @@
     "jms/serializer-bundle": "1.1.*",
     "symfony/monolog-bundle": "~2.4",
     "nelmio/cors-bundle": "~1.4.0",
-    "nelmio/api-doc-bundle": "~2.7",
     "icecave/lace": "^0.1.0"
   },
   "require-dev": {

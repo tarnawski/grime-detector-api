@@ -4,7 +4,7 @@ GrimeDetectorBundle\Entity\Statistic:
     repositoryClass: GrimeDetectorBundle\Repository\StatisticRepository
     id:
         key:
-            column: key
+            column: _key
             type: string
             nullable: false
     fields:

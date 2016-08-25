@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new Hautelook\AliceBundle\HautelookAliceBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
-            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
 
             new GrimeDetectorBundle\GrimeDetectorBundle(),
             new ApiBundle\ApiBundle(),

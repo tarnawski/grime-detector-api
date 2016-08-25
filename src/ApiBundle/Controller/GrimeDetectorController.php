@@ -6,58 +6,31 @@ use ApiBundle\Form\Type\QueryType;
 use ApiBundle\Model\Query;
 use GrimeDetectorBundle\Corrector\GrimeCorrector;
 use GrimeDetectorBundle\Detector\StrategyFactory;
-use GrimeDetectorBundle\Service\StatusService;
+use GrimeDetectorBundle\Service\StatisticService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class GrimeDetectorController extends BaseController
 {
     /**
-     * @ApiDoc(
-     *  description="Returns API status"
-     * )
      * @return Response
      */
     public function statusAction()
     {
-        /** @var StatusService $statusService */
-        $statusService = $this->get('grime_detector.service.status_service');
+        /** @var StatisticService $statisticService */
+        $statisticService = $this->get('grime_detector.service.statistic_service');
 
         $data = [
-            'languages' => $statusService->getLanguagesCount(),
-            'checked' => $statusService->getCheckedTextCount(),
-            'grime' => $statusService->getGrimeFoundCount()
+            'checked' => $statisticService->getStatistic('TEXT_CHECKED'),
+            'training_data' => $statisticService->getStatistic('LEARNING_DATA'),
+            'efficiency' => $statisticService->getStatistic('EFFICIENCY')
         ];
 
         return JsonResponse::create($data, Response::HTTP_OK);
     }
 
     /**
-     * @ApiDoc(
-     *  description="Returns the result of the text analysis",
-     *  requirements={
-     *      {
-     *          "name"="text",
-     *          "dataType"="String",
-     *          "requirement"="true",
-     *          "description"="Text to check"
-     *      },
-     *      {
-     *          "name"="language",
-     *          "dataType"="String",
-     *          "requirement"="false",
-     *          "description"="Specify language to use, default check in all languages"
-     *      },
-     *      {
-     *          "name"="correct",
-     *          "dataType"="Boolean",
-     *          "requirement"="false",
-     *          "description"="If true, replace grime words"
-     *      }
-     *  }
-     * )
      * @param Request $request
      * @return mixed
      */

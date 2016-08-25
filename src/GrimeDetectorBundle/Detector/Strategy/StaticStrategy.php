@@ -5,25 +5,25 @@ namespace GrimeDetectorBundle\Detector\Strategy;
 use GrimeDetectorBundle\Detector\DetectorStrategy;
 use GrimeDetectorBundle\Entity\Word;
 use GrimeDetectorBundle\Repository\WordRepository;
-use GrimeDetectorBundle\Service\LoggerService;
+use GrimeDetectorBundle\Service\StatisticService;
 
 class StaticStrategy implements DetectorStrategy
 {
     /** @var WordRepository */
     private $wordRepository;
 
-    /** @var  LoggerService */
-    private $loggerService;
+    /** @var  StatisticService */
+    private $statisticService;
 
     /** @var string */
     private $language;
 
     public function __construct(
         WordRepository $wordRepository,
-        LoggerService $loggerService
+        StatisticService $statisticService
     ) {
         $this->wordRepository = $wordRepository;
-        $this->loggerService = $loggerService;
+        $this->statisticService = $statisticService;
     }
 
     /**
@@ -41,6 +41,8 @@ class StaticStrategy implements DetectorStrategy
      */
     public function check($text, $language = null)
     {
+        $this->statisticService->incrementStatistic('TEXT_CHECKED');
+
         if (isset($language)) {
             $words = $this->wordRepository->getByLanguage($language);
         } else {
@@ -51,13 +53,9 @@ class StaticStrategy implements DetectorStrategy
         foreach ($words as $word) {
             if (strripos($text, $word->getValue()) !== false) {
 
-                $this->loggerService->logData($text, true);
-
                 return false;
             }
         }
-
-        $this->loggerService->logData($text, false);
 
         return true;
     }
