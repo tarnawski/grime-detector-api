@@ -1,0 +1,33 @@
+Tarnawski\GrimeDetectorBundle\Entity\Word:
+    type: entity
+    table: word
+    repositoryClass: Tarnawski\GrimeDetectorBundle\Repository\WordRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        value:
+            column: value
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        language:
+            column: language
+            type: string
+            nullable: false
+            length: 32
+        type:
+            column: type
+            type: string
+            nullable: false
+            length: 32
+
+    lifecycleCallbacks: {  }

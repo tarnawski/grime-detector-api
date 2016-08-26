@@ -1,0 +1,14 @@
+Tarnawski\GrimeDetectorBundle\Entity\Word:
+    properties:
+        value:
+            - NotBlank: ~
+            - Length:
+                max:   255
+        language:
+            - NotBlank: ~
+            - Length:
+                max:   32
+        type:
+            - NotBlank: ~
+            - Length:
+                max:   32

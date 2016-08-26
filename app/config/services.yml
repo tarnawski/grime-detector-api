@@ -3,26 +3,26 @@ services:
     class: Doctrine\ORM\EntityRepository
     factory: ['@doctrine.orm.entity_manager', getRepository]
     arguments:
-      - GrimeDetectorBundle\Entity\Word
+      - Tarnawski\GrimeDetectorBundle\Entity\Word
 
   grime_detector.service.statistic_service:
-    class: GrimeDetectorBundle\Service\StatisticService
+    class: Tarnawski\GrimeDetectorBundle\Service\StatisticService
     arguments:
       - '@doctrine.orm.entity_manager'
 
   grime_detector.detector.static_strategy:
-    class: GrimeDetectorBundle\Detector\Strategy\StaticStrategy
+    class: Tarnawski\GrimeDetectorBundle\Detector\Strategy\StaticStrategy
     arguments:
       - '@grime_detector.word.repository'
       - '@grime_detector.service.statistic_service'
 
   grime_detector.detector.strategy_factory:
-    class: GrimeDetectorBundle\Detector\StrategyFactory
+    class: Tarnawski\GrimeDetectorBundle\Detector\StrategyFactory
     arguments:
       - '@grime_detector.detector.static_strategy'
 
   grime_detector.corrector.grime_corrector:
-    class: GrimeDetectorBundle\Corrector\GrimeCorrector
+    class: Tarnawski\GrimeDetectorBundle\Corrector\GrimeCorrector
     arguments:
       - '@grime_detector.word.repository'
 
