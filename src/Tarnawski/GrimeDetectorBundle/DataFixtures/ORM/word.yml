@@ -1,9 +1,0 @@
-Tarnawski\GrimeDetectorBundle\Entity\Word:
-  word1:
-    value: dupa
-    language: pl
-    type: GRIME
-  word2:
-    value: fuck
-    language: en
-    type: GRIME

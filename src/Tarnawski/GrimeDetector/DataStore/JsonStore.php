@@ -1,10 +1,8 @@
 <?php
 
-namespace Tarnawski\GrimeDetectorBundle\DataStore\Strategy;
+namespace Tarnawski\GrimeDetector\DataStore;
 
-use Tarnawski\GrimeDetector\DataStore\DataStoreStrategy;
-
-class JsonStrategy implements DataStoreStrategy
+class JsonStore implements DataStore
 {
     /** @var string */
     private $path;
@@ -28,15 +26,6 @@ class JsonStrategy implements DataStoreStrategy
 
     public function write($data)
     {
-        $data = array();
-        foreach ($data as $type => $texts) {
-            foreach ($texts as $text) {
-                $data[] = array(
-                    'type' => $type,
-                    'text' => $text
-                );
-            }
-        }
         file_put_contents($this->path, json_encode($data));
     }
 }

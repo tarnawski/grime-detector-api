@@ -1,29 +1,37 @@
 services:
-  grime_detector.word.repository:
-    class: Doctrine\ORM\EntityRepository
-    factory: ['@doctrine.orm.entity_manager', getRepository]
-    arguments:
-      - Tarnawski\GrimeDetectorBundle\Entity\Word
 
-  grime_detector.service.statistic_service:
-    class: Tarnawski\GrimeDetectorBundle\Service\StatisticService
+  tarnawski.grime_detector.json_store:
+    class: Tarnawski\GrimeDetector\DataStore\JsonStore
     arguments:
-      - '@doctrine.orm.entity_manager'
+      - '/var/www/grime-detector/storage.json'
 
-  grime_detector.detector.static_strategy:
-    class: Tarnawski\GrimeDetectorBundle\Detector\Strategy\StaticStrategy
+  tarnawski.grime_detector.word_tokenizer:
+    class: Tarnawski\GrimeDetector\Tokenizer\WordTokenizer
+
+  tarnawski.grime_detector.lowercase_normalizer:
+    class: Tarnawski\GrimeDetector\Normalizer\LowercaseNormalizer
+
+  tarnawski.grime_detector.stop_words_normalizer:
+    class: Tarnawski\GrimeDetector\Normalizer\StopWordsNormalizer
+
+  tarnawski.grime_detector.unique_normalizer:
+    class: Tarnawski\GrimeDetector\Normalizer\UniqueNormalizer
+
+  tarnawski.grime_detector.data_processor:
+    class: Tarnawski\GrimeDetector\Processor\DataProcessor
     arguments:
-      - '@grime_detector.word.repository'
-      - '@grime_detector.service.statistic_service'
+      - '@tarnawski.grime_detector.json_store'
+      - '@tarnawski.grime_detector.word_tokenizer'
+      - '@tarnawski.grime_detector.lowercase_normalizer'
+      - '@tarnawski.grime_detector.stop_words_normalizer'
+      - '@tarnawski.grime_detector.unique_normalizer'
 
-  grime_detector.detector.strategy_factory:
-    class: Tarnawski\GrimeDetectorBundle\Detector\StrategyFactory
+  tarnawski.grime_detector.naive_bayes_classifier:
+    class: Tarnawski\GrimeDetector\Classifier\NaiveBayesClassifier
     arguments:
-      - '@grime_detector.detector.static_strategy'
-
-  grime_detector.corrector.grime_corrector:
-    class: Tarnawski\GrimeDetectorBundle\Corrector\GrimeCorrector
-    arguments:
-      - '@grime_detector.word.repository'
-
+      - '@tarnawski.grime_detector.json_store'
+      - '@tarnawski.grime_detector.word_tokenizer'
+      - '@tarnawski.grime_detector.lowercase_normalizer'
+      - '@tarnawski.grime_detector.stop_words_normalizer'
+      - '@tarnawski.grime_detector.unique_normalizer'
 

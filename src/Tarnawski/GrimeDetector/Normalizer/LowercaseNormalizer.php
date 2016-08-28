@@ -4,8 +4,13 @@ namespace Tarnawski\GrimeDetector\Normalizer;
 
 class LowercaseNormalizer implements Normalizer
 {
-    public function normalize($text)
+    public function normalize($words)
     {
-        return mb_strtolower($text, 'utf-8');
+        $normalizeWords = [];
+        foreach ($words as $word) {
+            $normalizeWords[] = mb_strtolower($word, 'utf-8');
+        }
+
+        return $normalizeWords;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tarnawski\GrimeDetector\DataStore;
 
-interface DataStoreStrategy
+interface DataStore
 {
     /**
      * @return mixed

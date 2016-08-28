@@ -1,6 +1,6 @@
 <?php
 
-namespace Tarnawski\ApiBundle\Model;
+namespace Tarnawski\GrimeDetectorBundle\Model;
 
 class Query
 {

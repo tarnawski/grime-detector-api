@@ -5,8 +5,8 @@ namespace Tarnawski\GrimeDetector\Normalizer;
 interface Normalizer
 {
     /**
-     * @param string $text
-     * @return string
+     * @param array $words
+     * @return array
      */
-    public function normalize($text);
+    public function normalize($words);
 }

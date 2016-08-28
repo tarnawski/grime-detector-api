@@ -1,14 +1,12 @@
-Tarnawski\GrimeDetectorBundle\Entity\Word:
+Tarnawski\GrimeDetectorBundle\Model\Query:
     properties:
-        value:
+        text:
             - NotBlank: ~
             - Length:
                 max:   255
         language:
-            - NotBlank: ~
             - Length:
-                max:   32
-        type:
-            - NotBlank: ~
-            - Length:
-                max:   32
+                max:   36
+        correct:
+            - Type:
+                type: bool

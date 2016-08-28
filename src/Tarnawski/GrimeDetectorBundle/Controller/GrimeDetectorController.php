@@ -1,12 +1,10 @@
 <?php
 
-namespace Tarnawski\ApiBundle\Controller;
+namespace Tarnawski\GrimeDetectorBundle\Controller;
 
-use Tarnawski\ApiBundle\Form\Type\QueryType;
-use Tarnawski\ApiBundle\Model\Query;
-use Tarnawski\GrimeDetectorBundle\Corrector\GrimeCorrector;
-use Tarnawski\GrimeDetectorBundle\Detector\StrategyFactory;
-use Tarnawski\GrimeDetectorBundle\Service\StatisticService;
+use Tarnawski\GrimeDetector\Classifier\NaiveBayesClassifier;
+use Tarnawski\GrimeDetectorBundle\Form\Type\QueryType;
+use Tarnawski\GrimeDetectorBundle\Model\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,31 +53,16 @@ class GrimeDetectorController extends BaseController
         /** @var Query $query */
         $query = $form->getData();
 
-        /** @var StrategyFactory $strategyFactory */
-        $strategyFactory = $this->get('grime_detector.detector.strategy_factory');
-        $strategy = $strategyFactory->getStrategy('static');
+        /** @var NaiveBayesClassifier $classifier */
+        $classifier = $this->get('tarnawski.grime_detector.naive_bayes_classifier');
 
-        $result = $strategy->check($query->text, $query->language);
+        $result = $classifier->classify($query->text);
 
-        if ($result) {
-            return JsonResponse::create([
-                'STATUS' => 'OK'
-            ], Response::HTTP_OK);
-        }
-
-        if ($query->correct) {
-            /** @var GrimeCorrector $grimeCorrector */
-            $grimeCorrector = $this->get('grime_detector.corrector.grime_corrector');
-            $correctText = $grimeCorrector->correct($query->text, $query->language);
-
-            return JsonResponse::create([
-                'STATUS' => 'GRIME',
-                'CORRECT' => $correctText
-            ], Response::HTTP_OK);
-        }
 
         return JsonResponse::create([
-            'STATUS' => 'GRIME'
+            'text' => $query->text,
+            'probability' => $result
         ], Response::HTTP_OK);
+
     }
 }

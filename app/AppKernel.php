@@ -24,7 +24,6 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
 
             new Tarnawski\GrimeDetectorBundle\GrimeDetectorBundle(),
-            new Tarnawski\ApiBundle\ApiBundle(),
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

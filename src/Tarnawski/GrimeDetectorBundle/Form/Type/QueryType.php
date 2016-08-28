@@ -1,8 +1,8 @@
 <?php
 
-namespace Tarnawski\ApiBundle\Form\Type;
+namespace Tarnawski\GrimeDetectorBundle\Form\Type;
 
-use Tarnawski\ApiBundle\Model\Query;
+use Tarnawski\GrimeDetectorBundle\Model\Query;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

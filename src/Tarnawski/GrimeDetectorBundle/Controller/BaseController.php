@@ -1,6 +1,6 @@
 <?php
 
-namespace Tarnawski\ApiBundle\Controller;
+namespace Tarnawski\GrimeDetectorBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializationContext;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiController
- * @package Tarnawski\ApiBundle\Controller
+ * @package Tarnawski\GrimeDetectorBundle\Controller
  */
 abstract class BaseController extends FOSRestController
 {
