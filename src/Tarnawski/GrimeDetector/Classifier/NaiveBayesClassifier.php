@@ -2,54 +2,25 @@
 
 namespace Tarnawski\GrimeDetector\Classifier;
 
-use Tarnawski\GrimeDetector\DataStore\JsonStore;
-use Tarnawski\GrimeDetector\Model\WordCollection;
-use Tarnawski\GrimeDetector\Normalizer\LowercaseNormalizer;
-use Tarnawski\GrimeDetector\Normalizer\StopWordsNormalizer;
-use Tarnawski\GrimeDetector\Normalizer\UniqueNormalizer;
-use Tarnawski\GrimeDetector\Tokenizer\WordTokenizer;
+use Tarnawski\GrimeDetector\Model\Dictionary;
 
 class NaiveBayesClassifier
 {
-    /** @var JsonStore */
-    private $jsonStore;
+    /** @var  Dictionary $dictionary) */
+    private $dictionary;
 
-    /** @var WordTokenizer */
-    private $wordTokenizer;
-
-    /** @var LowercaseNormalizer */
-    private $lowercaseNormalizer;
-
-    /** @var StopWordsNormalizer */
-    private $stopWordsNormalizer;
-
-    /** @var UniqueNormalizer */
-    private $uniqueNormalizer;
-
-    private $wordCollection;
-
-    public function __construct(
-        JsonStore $jsonStore,
-        WordTokenizer $wordTokenizer,
-        LowercaseNormalizer $lowercaseNormalizer,
-        StopWordsNormalizer $stopWordsNormalizer,
-        UniqueNormalizer $uniqueNormalizer
-    ) {
-        $this->jsonStore = $jsonStore;
-        $this->wordTokenizer = $wordTokenizer;
-        $this->lowercaseNormalizer = $lowercaseNormalizer;
-        $this->stopWordsNormalizer = $stopWordsNormalizer;
-        $this->uniqueNormalizer = $uniqueNormalizer;
-        $this->data = $jsonStore->read();
-        $this->wordCollection = new WordCollection();
-        $this->wordCollection->fromArray($this->data);
+    /**
+     * @param Dictionary $dictionary
+     */
+    public function setDictionary(Dictionary $dictionary)
+    {
+        $this->dictionary = $dictionary;
     }
 
-    public function classify($text)
+    public function classify($words)
     {
         $probabilityProducts = 1;
         $probabilitySums = 1;
-        $words = $this->prepare($text);
 
         foreach($words as $word)
         {
@@ -61,16 +32,6 @@ class NaiveBayesClassifier
         $grimeProbability = $probabilityProducts / ($probabilityProducts + $probabilitySums);
 
         return round($grimeProbability, 2);
-    }
-
-    public function prepare($stringWords)
-    {
-        $arrayWords = $this->wordTokenizer->tokenize($stringWords);
-        $arrayWords = $this->lowercaseNormalizer->normalize($arrayWords);
-        $arrayWords = $this->stopWordsNormalizer->normalize($arrayWords);
-        $arrayWords = $this->uniqueNormalizer->normalize($arrayWords);
-
-        return $arrayWords;
     }
 
     public function wordProbability($word)
@@ -88,34 +49,34 @@ class NaiveBayesClassifier
 
     public function probabilityContentIsGrime()
     {
-        return $this->wordCollection->getGrimeCount() / $this->wordCollection->getWordsCount();
+        return $this->dictionary->getGrimeCount() / $this->dictionary->getWordsCount();
     }
 
 
     public function probabilityContentIsHam()
     {
-        return $this->wordCollection->getHamCount() / $this->wordCollection->getWordsCount();
+        return $this->dictionary->getHamCount() / $this->dictionary->getWordsCount();
     }
 
 
     public function probabilityWordInGrime($word)
     {
-        $word = $this->wordCollection->getWord($word);
+        $word = $this->dictionary->getWord($word);
         if(!$word){
             return 0.5;
         }
 
-        return $word->getGrimCount() / $this->wordCollection->getGrimeCount();
+        return $word->getGrimCount() / $this->dictionary->getGrimeCount();
     }
 
 
     public function probabilityWordInHam($word)
     {
-        $word = $this->wordCollection->getWord($word);
+        $word = $this->dictionary->getWord($word);
         if(!$word){
             return 0.5;
         }
 
-        return $word->getHamCount() / $this->wordCollection->getHamCount();
+        return $word->getHamCount() / $this->dictionary->getHamCount();
     }
 }

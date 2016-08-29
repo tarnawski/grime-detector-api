@@ -1,9 +1,8 @@
 services:
-
-  tarnawski.grime_detector.json_store:
-    class: Tarnawski\GrimeDetector\DataStore\JsonStore
+  tarnawski.grime_detector.json_dictionary_store:
+    class: Tarnawski\GrimeDetector\DictionaryStore\JsonDictionaryStore
     arguments:
-      - '/var/www/grime-detector/storage.json'
+      - '/var/www/grime-detector/dictionary.json'
 
   tarnawski.grime_detector.word_tokenizer:
     class: Tarnawski\GrimeDetector\Tokenizer\WordTokenizer
@@ -17,21 +16,20 @@ services:
   tarnawski.grime_detector.unique_normalizer:
     class: Tarnawski\GrimeDetector\Normalizer\UniqueNormalizer
 
-  tarnawski.grime_detector.data_processor:
-    class: Tarnawski\GrimeDetector\Processor\DataProcessor
+  tarnawski.grime_detector.normalizer_factory:
+    class: Tarnawski\GrimeDetector\Normalizer\NormalizerFactory
     arguments:
-      - '@tarnawski.grime_detector.json_store'
-      - '@tarnawski.grime_detector.word_tokenizer'
       - '@tarnawski.grime_detector.lowercase_normalizer'
       - '@tarnawski.grime_detector.stop_words_normalizer'
       - '@tarnawski.grime_detector.unique_normalizer'
 
+  tarnawski.grime_detector.data_processor:
+    class: Tarnawski\GrimeDetector\Processor\DataProcessor
+    arguments:
+      - '@tarnawski.grime_detector.word_tokenizer'
+      - '@tarnawski.grime_detector.normalizer_factory'
+
   tarnawski.grime_detector.naive_bayes_classifier:
     class: Tarnawski\GrimeDetector\Classifier\NaiveBayesClassifier
-    arguments:
-      - '@tarnawski.grime_detector.json_store'
-      - '@tarnawski.grime_detector.word_tokenizer'
-      - '@tarnawski.grime_detector.lowercase_normalizer'
-      - '@tarnawski.grime_detector.stop_words_normalizer'
-      - '@tarnawski.grime_detector.unique_normalizer'
+
 

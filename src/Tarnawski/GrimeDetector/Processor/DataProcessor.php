@@ -3,103 +3,83 @@
 namespace Tarnawski\GrimeDetector\Processor;
 
 use Tarnawski\GrimeDetector\Model\Word;
-use Tarnawski\GrimeDetector\Model\WordCollection;
-use Tarnawski\GrimeDetector\Normalizer\LowercaseNormalizer;
-use Tarnawski\GrimeDetector\Normalizer\StopWordsNormalizer;
-use Tarnawski\GrimeDetector\Normalizer\UniqueNormalizer;
+use Tarnawski\GrimeDetector\Model\Dictionary;
+use Tarnawski\GrimeDetector\Normalizer\NormalizerFactory;
 use Tarnawski\GrimeDetector\Tokenizer\WordTokenizer;
-use Tarnawski\GrimeDetector\DataStore\JsonStore;
 
 class DataProcessor
 {
     const GRIME = 'grime';
     const HAM = 'ham';
 
-    /** @var JsonStore */
-    private $jsonStore;
+    private $trainingData;
 
     /** @var WordTokenizer */
     private $wordTokenizer;
 
-    /** @var LowercaseNormalizer */
-    private $lowercaseNormalizer;
+    /** @var NormalizerFactory */
+    private $normalizer;
 
-    /** @var StopWordsNormalizer */
-    private $stopWordsNormalizer;
-
-    /** @var UniqueNormalizer */
-    private $uniqueNormalizer;
 
     public function __construct(
-        JsonStore $jsonStore,
         WordTokenizer $wordTokenizer,
-        LowercaseNormalizer $lowercaseNormalizer,
-        StopWordsNormalizer $stopWordsNormalizer,
-        UniqueNormalizer $uniqueNormalizer
+        NormalizerFactory $normalizerFactory
     ) {
-        $this->jsonStore = $jsonStore;
         $this->wordTokenizer = $wordTokenizer;
-        $this->lowercaseNormalizer = $lowercaseNormalizer;
-        $this->stopWordsNormalizer = $stopWordsNormalizer;
-        $this->uniqueNormalizer = $uniqueNormalizer;
+        $this->normalizer = $normalizerFactory;
     }
 
-    public function read($path)
+    /**
+     * @param mixed $path
+     */
+    public function loadTrainingData($path)
     {
         if (file_exists($path)) {
-            $data = json_decode(file_get_contents($path), true);
+            $data = array_map('str_getcsv', file('/var/www/grime-detector/testdata.csv'));
+
             if (is_array($data)) {
-                return $data;
+                $this->trainingData =  $data;
             }
         }
-
-        return [];
     }
 
-    public function prepare($stringWords)
-    {
-        $arrayWords = $this->wordTokenizer->tokenize($stringWords);
-        $arrayWords = $this->lowercaseNormalizer->normalize($arrayWords);
-        $arrayWords = $this->stopWordsNormalizer->normalize($arrayWords);
-        $arrayWords = $this->uniqueNormalizer->normalize($arrayWords);
+    public function process(){
+        $dictionary = new Dictionary();
 
-        return $arrayWords;
-    }
+        foreach ($this->trainingData as $item) {
+            if($item[0] == 0 ||  $item[0] == 4) {
 
-    public function process($data){
-        $wordCollection = new WordCollection();
 
-        foreach ($data as $item) {
-            $text = isset($item['text']) ? $item['text'] : '';
-            $type = isset($item['type']) ? $item['type'] : '';
+                $text = $item[1];
+                $type = $item[0] == 0 ? 'grime' : 'ham';
 
-            $words = $this->prepare($text);
+                $words = $this->wordTokenizer->tokenize($text);
+                $words = $this->normalizer->normalize($words, ['LOWERCASE', 'STOP_WORDS', 'UNIQUE']);
 
-            foreach ($words as $word){
-                /** @var Word $wordObj */
-                $wordObj = $wordCollection->getWord($word);
-                if($wordObj){
-                    if ($type == self::GRIME ) {
-                        $wordObj->incrementGrimCount();
+                foreach ($words as $word) {
+                    /** @var Word $wordObj */
+                    $wordObj = $dictionary->getWord($word);
+                    if ($wordObj) {
+                        if ($type == self::GRIME) {
+                            $wordObj->incrementGrimCount();
+                        }
+                        if ($type == self::HAM) {
+                            $wordObj->incrementHamCount();
+                        }
+                    } else {
+                        $wordObj = new Word($word);
+                        if ($type == self::GRIME) {
+                            $wordObj->incrementGrimCount();
+                        }
+                        if ($type == self::HAM) {
+                            $wordObj->incrementHamCount();
+                        }
+                        $dictionary->addWord($wordObj);
                     }
-                    if ($type == self::HAM ) {
-                        $wordObj->incrementHamCount();
-                    }
-                } else {
-                    $wordObj = new Word($word);
-                    if ($type == self::GRIME ) {
-                        $wordObj->incrementGrimCount();
-                    }
-                    if ($type == self::HAM ) {
-                        $wordObj->incrementHamCount();
-                    }
-                    $wordCollection->addWord($wordObj);
                 }
             }
         }
 
-        $wordArray = $wordCollection->toArray();
-
-        $this->jsonStore->write($wordArray);
+        return $dictionary;
     }
 }

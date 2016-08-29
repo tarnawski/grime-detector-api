@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tarnawski\GrimeDetector\DictionaryStore\JsonDictionaryStore;
 use Tarnawski\GrimeDetector\Processor\DataProcessor;
 
 class ProcessDataCommand extends ContainerAwareCommand
@@ -23,12 +24,17 @@ class ProcessDataCommand extends ContainerAwareCommand
     {
         /** @var DataProcessor $processor */
         $processor = $this->getContainer()->get('tarnawski.grime_detector.data_processor');
-        $path = $input->getArgument('path');
+        $trainingPath = $input->getArgument('path');
 
-        $data = $processor->read($path);
+        $processor->loadTrainingData($trainingPath);
+        $dictionary = $processor->process();
 
-        $processor->process($data);
+        /** @var JsonDictionaryStore $jsonDictionaryStore */
+        $jsonDictionaryStore = $this->getContainer()->get('tarnawski.grime_detector.json_dictionary_store');
+
+        $jsonDictionaryStore->write($dictionary);
 
         $output->writeln("Finish");
     }
+
 }

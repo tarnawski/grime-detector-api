@@ -3,6 +3,9 @@
 namespace Tarnawski\GrimeDetectorBundle\Controller;
 
 use Tarnawski\GrimeDetector\Classifier\NaiveBayesClassifier;
+use Tarnawski\GrimeDetector\DictionaryStore\JsonDictionaryStore;
+use Tarnawski\GrimeDetector\Normalizer\NormalizerFactory;
+use Tarnawski\GrimeDetector\Tokenizer\WordTokenizer;
 use Tarnawski\GrimeDetectorBundle\Form\Type\QueryType;
 use Tarnawski\GrimeDetectorBundle\Model\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,13 +27,10 @@ class GrimeDetectorController extends BaseController
      */
     public function statusAction()
     {
-        /** @var StatisticService $statisticService */
-        $statisticService = $this->get('grime_detector.service.statistic_service');
-
         $data = [
-            'checked' => $statisticService->getStatistic('TEXT_CHECKED'),
-            'training_data' => $statisticService->getStatistic('LEARNING_DATA'),
-            'efficiency' => $statisticService->getStatistic('EFFICIENCY')
+            'checked' => 317,
+            'training_data' => 687,
+            'efficiency' => 65.8
         ];
 
         return JsonResponse::create($data, Response::HTTP_OK);
@@ -53,16 +53,27 @@ class GrimeDetectorController extends BaseController
         /** @var Query $query */
         $query = $form->getData();
 
+        /** @var WordTokenizer $wordTokenizer */
+        $wordTokenizer = $this->get('tarnawski.grime_detector.word_tokenizer');
+        $arrayWords = $wordTokenizer->tokenize($query->text);
+
+        /** @var NormalizerFactory $normalizer */
+        $normalizer = $this->get('tarnawski.grime_detector.normalizer_factory');
+        $arrayWords = $normalizer->normalize($arrayWords, ['LOWERCASE', 'STOP_WORDS', 'UNIQUE']);
+
+        /** @var JsonDictionaryStore $jsonDictionaryStore */
+        $jsonDictionaryStore = $this->get('tarnawski.grime_detector.json_dictionary_store');
+        $dictionary = $jsonDictionaryStore->read();
+
         /** @var NaiveBayesClassifier $classifier */
         $classifier = $this->get('tarnawski.grime_detector.naive_bayes_classifier');
 
-        $result = $classifier->classify($query->text);
-
+        $classifier->setDictionary($dictionary);
+        $result = $classifier->classify($arrayWords);
 
         return JsonResponse::create([
             'text' => $query->text,
             'probability' => $result
         ], Response::HTTP_OK);
-
     }
 }
