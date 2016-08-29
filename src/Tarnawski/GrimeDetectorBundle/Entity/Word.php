@@ -22,6 +22,14 @@ class Word
     }
 
     /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return int
      */
     public function getGrimeCount()
@@ -30,10 +38,26 @@ class Word
     }
 
     /**
+     * @param int $grimeCount
+     */
+    public function setGrimeCount($grimeCount)
+    {
+        $this->grimeCount = $grimeCount;
+    }
+
+    /**
      * @return int
      */
     public function getHamCount()
     {
         return $this->hamCount;
+    }
+
+    /**
+     * @param int $hamCount
+     */
+    public function setHamCount($hamCount)
+    {
+        $this->hamCount = $hamCount;
     }
 }
