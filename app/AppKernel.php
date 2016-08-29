@@ -23,8 +23,8 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
 
-            new GrimeDetectorBundle\GrimeDetectorBundle(),
-            new ApiBundle\ApiBundle(),
+            new Tarnawski\ApiBundle\ApiBundle(),
+            new Tarnawski\GrimeDetectorBundle\GrimeDetectorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
