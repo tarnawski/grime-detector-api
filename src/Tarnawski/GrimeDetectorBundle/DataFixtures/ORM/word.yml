@@ -1,0 +1,9 @@
+Tarnawski\GrimeDetectorBundle\Entity\Word:
+  word1:
+    name: stupid
+    grimeCount: 1
+    hamCount: 0
+  word2:
+    name: super
+    grimeCount: 0
+    hamCount: 1

@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
 
+            new Tarnawski\ApiBundle\ApiBundle(),
             new Tarnawski\GrimeDetectorBundle\GrimeDetectorBundle(),
         ];
 

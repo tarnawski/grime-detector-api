@@ -1,14 +1,14 @@
 ping:
     path:     /ping
-    defaults: { _controller: GrimeDetectorBundle:GrimeDetector:ping, _format: json }
+    defaults: { _controller: ApiBundle:GrimeDetector:ping, _format: json }
     methods: [GET]
 
 status:
     path:     /status
-    defaults: { _controller: GrimeDetectorBundle:GrimeDetector:status, _format: json }
+    defaults: { _controller: ApiBundle:GrimeDetector:status, _format: json }
     methods: [GET]
 
 check:
     path:     /check
-    defaults: { _controller: GrimeDetectorBundle:GrimeDetector:check, _format: json }
+    defaults: { _controller: ApiBundle:GrimeDetector:check, _format: json }
     methods: [POST]

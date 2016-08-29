@@ -1,35 +1,36 @@
 services:
-  tarnawski.grime_detector.json_dictionary_store:
-    class: Tarnawski\GrimeDetector\DictionaryStore\JsonDictionaryStore
+  tarnawski.grime_detector.word.repository:
+    class: Doctrine\ORM\EntityRepository
+    factory: ['@doctrine.orm.entity_manager', getRepository]
     arguments:
-      - '/var/www/grime-detector/dictionary.json'
+      - Tarnawski\GrimeDetectorBundle\Entity\Word
+
+  tarnawski.grime_detector.service.statistic_service:
+    class: Tarnawski\GrimeDetectorBundle\Service\StatisticService
+    arguments:
+      - '@doctrine.orm.entity_manager'
 
   tarnawski.grime_detector.word_tokenizer:
-    class: Tarnawski\GrimeDetector\Tokenizer\WordTokenizer
+    class: Tarnawski\GrimeDetectorBundle\Tokenizer\WordTokenizer
 
   tarnawski.grime_detector.lowercase_normalizer:
-    class: Tarnawski\GrimeDetector\Normalizer\LowercaseNormalizer
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\LowercaseNormalizer
 
   tarnawski.grime_detector.stop_words_normalizer:
-    class: Tarnawski\GrimeDetector\Normalizer\StopWordsNormalizer
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\StopWordsNormalizer
 
   tarnawski.grime_detector.unique_normalizer:
-    class: Tarnawski\GrimeDetector\Normalizer\UniqueNormalizer
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\UniqueNormalizer
 
   tarnawski.grime_detector.normalizer_factory:
-    class: Tarnawski\GrimeDetector\Normalizer\NormalizerFactory
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\NormalizerFactory
     arguments:
       - '@tarnawski.grime_detector.lowercase_normalizer'
       - '@tarnawski.grime_detector.stop_words_normalizer'
       - '@tarnawski.grime_detector.unique_normalizer'
 
-  tarnawski.grime_detector.data_processor:
-    class: Tarnawski\GrimeDetector\Processor\DataProcessor
-    arguments:
-      - '@tarnawski.grime_detector.word_tokenizer'
-      - '@tarnawski.grime_detector.normalizer_factory'
-
   tarnawski.grime_detector.naive_bayes_classifier:
-    class: Tarnawski\GrimeDetector\Classifier\NaiveBayesClassifier
-
+    class: Tarnawski\GrimeDetectorBundle\Classifier\NaiveBayesClassifier
+    arguments:
+      - '@tarnawski.grime_detector.word.repository'
 

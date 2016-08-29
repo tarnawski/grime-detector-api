@@ -1,8 +1,9 @@
 parameters:
-    secret_key: SecretToken
-    database_driver:   pdo_mysql
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     grime-detector
-    database_user:     root
-    database_password: root
+    secret_key:             SecretToken
+    database_driver:        pdo_mysql
+    database_host:          127.0.0.1
+    database_port:          ~
+    database_name:          grime-detector
+    database_user:          root
+    database_password:      root
+    default_threshold:      0.5
