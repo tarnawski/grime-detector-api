@@ -43,6 +43,10 @@ class GrimeDetectorController extends BaseController
      */
     public function checkAction(Request $request)
     {
+        /** @var StatisticService $statisticService */
+        $statisticService = $this->get('tarnawski.grime_detector.service.statistic_service');
+        $statisticService->incrementStatistic('TEXT_CHECKED');
+
         $form = $this->createForm(QueryType::class);
         $submittedData = json_decode($request->getContent(), true);
         $form->submit($submittedData);
