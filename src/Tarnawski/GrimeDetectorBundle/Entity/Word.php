@@ -8,10 +8,10 @@ class Word
     private $name;
 
     /** @var  integer */
-    private $grimeCount;
+    private $positive;
 
     /** @var  integer */
-    private $hamCount;
+    private $negative;
 
     /**
      * @return string
@@ -32,32 +32,32 @@ class Word
     /**
      * @return int
      */
-    public function getGrimeCount()
+    public function getPositive()
     {
-        return $this->grimeCount;
+        return $this->positive;
     }
 
     /**
-     * @param int $grimeCount
+     * @param int $positive
      */
-    public function setGrimeCount($grimeCount)
+    public function setPositive($positive)
     {
-        $this->grimeCount = $grimeCount;
+        $this->positive = $positive;
     }
 
     /**
      * @return int
      */
-    public function getHamCount()
+    public function getNegative()
     {
-        return $this->hamCount;
+        return $this->negative;
     }
 
     /**
-     * @param int $hamCount
+     * @param int $negative
      */
-    public function setHamCount($hamCount)
+    public function setNegative($negative)
     {
-        $this->hamCount = $hamCount;
+        $this->negative = $negative;
     }
 }

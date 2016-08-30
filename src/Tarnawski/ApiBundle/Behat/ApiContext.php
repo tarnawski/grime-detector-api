@@ -76,8 +76,8 @@ class ApiContext extends WebApiContext implements Context, SnippetAcceptingConte
         foreach ($table->getColumnsHash() as $row) {
             $word = new Word();
             $word->setName($row['NAME']);
-            $word->setGrimeCount((int)$row['GRIME_COUNT']);
-            $word->setHamCount((int)$row['HAM_COUNT']);
+            $word->setPositive((int)$row['POSITIVE']);
+            $word->setNegative((int)$row['NEGATIVE']);
             $this->getManager()->persist($word);
         }
         $this->getManager()->flush();

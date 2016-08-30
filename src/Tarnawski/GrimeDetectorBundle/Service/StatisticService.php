@@ -31,9 +31,11 @@ class StatisticService
     {
         /** @var Statistic $statistic */
         $statistic = $this->statisticRepository->findByKey($key);
-        $newValue = (int)$statistic->getValue() + $value;
-        $statistic->setValue($newValue);
-        $this->em->persist($statistic);
-        $this->em->flush();
+        if ($statistic) {
+            $newValue = (int)$statistic->getValue() + $value;
+            $statistic->setValue($newValue);
+            $this->em->persist($statistic);
+            $this->em->flush();
+        }
     }
 }

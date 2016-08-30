@@ -5,12 +5,12 @@ Feature: Check text
 
   Background:
     Given There are the following words:
-      | NAME   | GRIME_COUNT | HAM_COUNT |
-      | stupid |      1      |    0      |
-      | super  |      0      |    1      |
+      | NAME   | POSITIVE | NEGATIVE |
+      | stupid |    0     |    1     |
+      | super  |    1     |    0     |
 
   @cleanDB
-  Scenario: Check text with grime
+  Scenario: Check negative text
     When I send a POST request to "/check" with body:
     """
     {
@@ -21,12 +21,12 @@ Feature: Check text
     And the JSON response should match:
     """
     {
-      "status": "GRIME"
+      "status": "NEGATIVE"
     }
     """
 
   @cleanDB
-  Scenario: Check text without grime
+  Scenario: Check positive text
     When I send a POST request to "/check" with body:
     """
     {
@@ -37,12 +37,12 @@ Feature: Check text
     And the JSON response should match:
     """
     {
-      "status": "HAM"
+      "status": "POSITIVE"
     }
     """
 
   @cleanDB
-  Scenario: Check text and complex output
+  Scenario: Check negative text and complex output
     When I send a POST request to "/check" with body:
     """
     {
@@ -57,12 +57,12 @@ Feature: Check text
       "text": "stupid",
       "probability": 0.99,
       "threshold": 0.5,
-      "status": "GRIME"
+      "status": "NEGATIVE"
     }
     """
 
   @cleanDB
-  Scenario: Check text and custom threshold
+  Scenario: Check neutral text and custom threshold
     When I send a POST request to "/check" with body:
     """
     {
@@ -78,6 +78,6 @@ Feature: Check text
       "text": "neutral",
       "probability": 0.5,
       "threshold": 0.49,
-      "status": "GRIME"
+      "status": "NEGATIVE"
     }
     """
