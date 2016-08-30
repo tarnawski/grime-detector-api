@@ -1,0 +1,24 @@
+Tarnawski\GrimeDetectorBundle\Entity\Word:
+    type: entity
+    table: word
+    repositoryClass: Tarnawski\GrimeDetectorBundle\Repository\WordRepository
+    id:
+        name:
+            column: name
+            type: string
+            unique: true
+            nullable: false
+            length: 255
+    fields:
+        grimeCount:
+            column: grime_count
+            type: integer
+            options:
+                default: 0
+        hamCount:
+            column: ham_count
+            type: integer
+            options:
+                default: 0
+
+    lifecycleCallbacks: {  }

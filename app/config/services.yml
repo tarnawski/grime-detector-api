@@ -1,29 +1,36 @@
 services:
-  grime_detector.word.repository:
+  tarnawski.grime_detector.word.repository:
     class: Doctrine\ORM\EntityRepository
     factory: ['@doctrine.orm.entity_manager', getRepository]
     arguments:
-      - GrimeDetectorBundle\Entity\Word
+      - Tarnawski\GrimeDetectorBundle\Entity\Word
 
-  grime_detector.service.statistic_service:
-    class: GrimeDetectorBundle\Service\StatisticService
+  tarnawski.grime_detector.service.statistic_service:
+    class: Tarnawski\GrimeDetectorBundle\Service\StatisticService
     arguments:
       - '@doctrine.orm.entity_manager'
 
-  grime_detector.detector.static_strategy:
-    class: GrimeDetectorBundle\Detector\Strategy\StaticStrategy
-    arguments:
-      - '@grime_detector.word.repository'
-      - '@grime_detector.service.statistic_service'
+  tarnawski.grime_detector.word_tokenizer:
+    class: Tarnawski\GrimeDetectorBundle\Tokenizer\WordTokenizer
 
-  grime_detector.detector.strategy_factory:
-    class: GrimeDetectorBundle\Detector\StrategyFactory
-    arguments:
-      - '@grime_detector.detector.static_strategy'
+  tarnawski.grime_detector.lowercase_normalizer:
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\LowercaseNormalizer
 
-  grime_detector.corrector.grime_corrector:
-    class: GrimeDetectorBundle\Corrector\GrimeCorrector
-    arguments:
-      - '@grime_detector.word.repository'
+  tarnawski.grime_detector.stop_words_normalizer:
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\StopWordsNormalizer
 
+  tarnawski.grime_detector.unique_normalizer:
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\UniqueNormalizer
+
+  tarnawski.grime_detector.normalizer_factory:
+    class: Tarnawski\GrimeDetectorBundle\Normalizer\NormalizerFactory
+    arguments:
+      - '@tarnawski.grime_detector.lowercase_normalizer'
+      - '@tarnawski.grime_detector.stop_words_normalizer'
+      - '@tarnawski.grime_detector.unique_normalizer'
+
+  tarnawski.grime_detector.naive_bayes_classifier:
+    class: Tarnawski\GrimeDetectorBundle\Classifier\NaiveBayesClassifier
+    arguments:
+      - '@tarnawski.grime_detector.word.repository'
 
