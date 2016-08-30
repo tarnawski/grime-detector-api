@@ -1,0 +1,9 @@
+Tarnawski\GrimeDetectorBundle\Entity\Comment:
+  comment1:
+    content: You are stupid
+    positive: false
+    processed: false
+  comment2:
+    content: You are super
+    positive: true
+    processed: false

@@ -71,7 +71,7 @@ class GrimeDetectorController extends BaseController
         $probability = $classifier->classify($arrayWords);
 
         $threshold = isset($query->threshold) ? $query->threshold : $this->getParameter('default_threshold');
-        $status = ($probability > $threshold) ? 'GRIME' : 'HAM';
+        $status = ($probability > $threshold) ? 'NEGATIVE' : 'POSITIVE';
 
         if ($query->output == 'complex') {
             return JsonResponse::create([

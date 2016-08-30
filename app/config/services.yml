@@ -34,3 +34,9 @@ services:
     arguments:
       - '@tarnawski.grime_detector.word.repository'
 
+  tarnawski.grime_detector.processor.comment_processor:
+    class: Tarnawski\GrimeDetectorBundle\Processor\CommentProcessor
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@tarnawski.grime_detector.word_tokenizer'
+      - '@tarnawski.grime_detector.normalizer_factory'

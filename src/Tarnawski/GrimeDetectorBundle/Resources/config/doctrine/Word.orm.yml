@@ -10,13 +10,13 @@ Tarnawski\GrimeDetectorBundle\Entity\Word:
             nullable: false
             length: 255
     fields:
-        grimeCount:
-            column: grime_count
+        positive:
+            column: positive
             type: integer
             options:
                 default: 0
-        hamCount:
-            column: ham_count
+        negative:
+            column: negative
             type: integer
             options:
                 default: 0

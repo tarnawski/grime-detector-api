@@ -1,0 +1,33 @@
+Tarnawski\GrimeDetectorBundle\Entity\Comment:
+    type: entity
+    table: comment
+    repositoryClass: Tarnawski\GrimeDetectorBundle\Repository\CommentRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        content:
+            column: content
+            type: string
+            nullable: false
+            length: 255
+            options:
+              fixed: true
+        positive:
+            column: positive
+            type: boolean
+            options:
+                default: 0
+        processed:
+            column: processed
+            type: boolean
+            options:
+                default: 0
+
+    lifecycleCallbacks: {  }

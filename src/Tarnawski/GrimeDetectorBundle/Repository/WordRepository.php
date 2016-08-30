@@ -31,22 +31,22 @@ class WordRepository extends EntityRepository
         return $result;
     }
 
-    public function getGrimeCount()
+    public function getNegativeCount()
     {
         $result = $this->createQueryBuilder('w')
             ->select('count(w)')
-            ->where('w.grimeCount > w.hamCount')
+            ->where('w.negative > w.positive')
             ->getQuery()
             ->getSingleScalarResult();
 
         return (int)$result;
     }
 
-    public function getHamCount()
+    public function getPositiveCount()
     {
         $result = $this->createQueryBuilder('w')
             ->select('count(w)')
-            ->where('w.grimeCount < w.hamCount')
+            ->where('w.positive > w.negative')
             ->getQuery()
             ->getSingleScalarResult();
 
