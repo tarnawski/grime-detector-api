@@ -46,6 +46,14 @@ class Word
     }
 
     /**
+     * @param int $value
+     */
+    public function incrementPositive($value = 1)
+    {
+        $this->positive += $value;
+    }
+
+    /**
      * @return int
      */
     public function getNegative()
@@ -59,5 +67,13 @@ class Word
     public function setNegative($negative)
     {
         $this->negative = $negative;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function incrementNegative($value = 1)
+    {
+        $this->negative += $value;
     }
 }

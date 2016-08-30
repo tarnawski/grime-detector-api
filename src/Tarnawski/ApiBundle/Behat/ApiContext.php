@@ -22,6 +22,7 @@ use Tarnawski\GrimeDetectorBundle\Entity\Word;
 class ApiContext extends WebApiContext implements Context, SnippetAcceptingContext, KernelAwareContext
 {
     use KernelDictionary;
+
     /**
      * @BeforeScenario @cleanDB
      * @AfterScenario @cleanDB
@@ -33,6 +34,7 @@ class ApiContext extends WebApiContext implements Context, SnippetAcceptingConte
         $application->run(new StringInput("doctrine:schema:drop --force -n -q"));
         $application->run(new StringInput("doctrine:schema:create -n -q"));
     }
+
     /**
      * @return EntityManager
      */
@@ -83,5 +85,4 @@ class ApiContext extends WebApiContext implements Context, SnippetAcceptingConte
         $this->getManager()->flush();
         $this->getManager()->clear();
     }
-
 }

@@ -9,14 +9,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
-    public function getPUnprocessedComments($number = 10)
+    public function getCountUnprocessedComments()
     {
-        $result = $this->createQueryBuilder('w')
-            ->select('w')
-            ->where('w.processed = false')
+        $result = $this->createQueryBuilder('c')
+            ->select('count(c)')
+            ->where('c.processed = false')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $result;
+    }
+
+    public function getUnprocessedComments($number = 10)
+    {
+        $result = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.processed = false')
             ->setMaxResults($number)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
 
         return $result;
     }
